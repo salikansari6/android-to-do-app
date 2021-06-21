@@ -87,6 +87,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
                 case R.id.todo_completed:
                     ToDo todo = todos.get(getAdapterPosition());
                     todo.setCompleted(isChecked);
+                    Log.d("NewItem",todo.toString());
                     DataBaseHandler db = new DataBaseHandler(context);
                     db.updateToDo(todo);
             }

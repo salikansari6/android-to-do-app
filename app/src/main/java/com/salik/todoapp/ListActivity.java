@@ -74,10 +74,8 @@ public class ListActivity extends AppCompatActivity {
                 ToDo todo = new ToDo();
                 todo.setTitle(enterTodo.getText().toString());
                 todo.setCompleted(false);
+                todo = saveItem(todo);
                 todos.add(todo);
-                saveItem(todo);
-                DataBaseHandler db = new DataBaseHandler(ListActivity.this);
-                toDoAdapter.notifyItemInserted(todos.size()+1);
                 alertDialog.dismiss();
 
 
@@ -88,9 +86,12 @@ public class ListActivity extends AppCompatActivity {
         alertDialog.show();
 
     }
-    private void saveItem(ToDo todo) {
+    private ToDo saveItem(ToDo todo) {
         DataBaseHandler db = new DataBaseHandler(this);
-        db.addToDo(todo);
+         todo = db.addToDo(todo);
+         return todo;
+
+
     }
 
 }

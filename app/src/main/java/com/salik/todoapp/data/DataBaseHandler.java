@@ -42,14 +42,16 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addToDo(ToDo todo){
+    public ToDo addToDo(ToDo todo){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Constants.KEY_TITLE,todo.getTitle());
         values.put(Constants.KEY_COMPLETED,false);
 
-        db.insert(Constants.TABLE_NAME,null,values);
-        Log.d("DB","added toDo " + todo.getTitle());
+        int id = (int) db.insert(Constants.TABLE_NAME,null,values);
+        todo.setId(id);
+        return todo;
+
     }
 
     public ToDo getToDo(int id){

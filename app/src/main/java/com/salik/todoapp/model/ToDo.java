@@ -43,6 +43,6 @@ public class ToDo {
     @NonNull
     @Override
     public String toString() {
-        return "title: " + this.title;
+        return "title: " + this.title + " Completed: " + String.valueOf(this.isCompleted());
     }
 }
