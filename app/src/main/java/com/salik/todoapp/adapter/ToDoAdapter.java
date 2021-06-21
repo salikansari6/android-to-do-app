@@ -1,5 +1,6 @@
 package com.salik.todoapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
 
     private final List<ToDo> todos;
-
-    public ToDoAdapter(List<ToDo> todos) {
+    private  final Context context;
+    public ToDoAdapter(Context context,List<ToDo> todos) {
         this.todos = todos;
+        this.context = context;
     }
 
     @NonNull
