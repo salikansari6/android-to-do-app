@@ -101,7 +101,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Constants.KEY_TITLE,toDo.getTitle());
-        values.put(Constants.KEY_COMPLETED,false);
+        values.put(Constants.KEY_COMPLETED,toDo.isCompleted());
 
         return db.update(Constants.TABLE_NAME,values,Constants.KEY_ID+"=?",new String[]{String.valueOf(toDo.getId())});
     }

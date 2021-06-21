@@ -1,11 +1,13 @@
 package com.salik.todoapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,7 +48,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return todos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
         private TextView todoTitle;
         private CheckBox todoCompleted;
         private Button deleteButton;
@@ -57,7 +59,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             todoCompleted = itemView.findViewById(R.id.todo_completed);
             deleteButton = itemView.findViewById(R.id.delete_btn);
             deleteButton.setOnClickListener(this);
-
+            todoCompleted.setOnCheckedChangeListener(this);
         }
 
         @Override
@@ -79,6 +81,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             notifyItemRemoved(getAdapterPosition());
         }
 
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch (buttonView.getId()){
+                case R.id.todo_completed:
+                    ToDo todo = todos.get(getAdapterPosition());
+                    todo.setCompleted(isChecked);
+                    DataBaseHandler db = new DataBaseHandler(context);
+                    db.updateToDo(todo);
+            }
+
+        }
     }
 
 
