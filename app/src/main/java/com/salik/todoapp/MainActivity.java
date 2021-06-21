@@ -5,15 +5,23 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    AlertDialog.Builder alertDialogBuilder;
+    AlertDialog alertDialog;
+    private EditText enterTodo;
+    Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +34,22 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                showPopUp();
             }
         });
+    }
+
+    private void showPopUp() {
+
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.edit_todo,null);
+        enterTodo = view.findViewById(R.id.enter_todo);
+        saveButton = view.findViewById(R.id.save_button);
+        alertDialogBuilder.setView(view);
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+
     }
 
     @Override
