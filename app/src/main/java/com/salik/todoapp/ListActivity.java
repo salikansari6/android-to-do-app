@@ -12,6 +12,7 @@ import com.salik.todoapp.model.ToDo;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.arch.core.executor.DefaultTaskExecutor;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +44,6 @@ public class ListActivity extends AppCompatActivity {
         toDoRecycler = findViewById(R.id.todo_recycler);
 
         DataBaseHandler db = new DataBaseHandler(this);
-        toDoRecycler.setHasFixedSize(true);
         toDoRecycler.setLayoutManager(new LinearLayoutManager(this));
         todos = new ArrayList<>();
         todos =  db.getAllToDos();
@@ -71,8 +71,13 @@ public class ListActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveItem();
-                toDoAdapter.notifyDataSetChanged();
+                ToDo todo = new ToDo();
+                todo.setTitle(enterTodo.getText().toString());
+                todo.setCompleted(false);
+                todos.add(todo);
+                saveItem(todo);
+                DataBaseHandler db = new DataBaseHandler(ListActivity.this);
+                toDoAdapter.notifyItemInserted(todos.size()+1);
                 alertDialog.dismiss();
 
 
@@ -83,11 +88,9 @@ public class ListActivity extends AppCompatActivity {
         alertDialog.show();
 
     }
-    private void saveItem() {
-        ToDo toDo = new ToDo();
-        toDo.setTitle(enterTodo.getText().toString());
+    private void saveItem(ToDo todo) {
         DataBaseHandler db = new DataBaseHandler(this);
-        db.addToDo(toDo);
+        db.addToDo(todo);
     }
 
 }
