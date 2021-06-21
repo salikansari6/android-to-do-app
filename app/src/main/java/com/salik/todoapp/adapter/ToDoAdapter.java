@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.salik.todoapp.R;
+import com.salik.todoapp.data.DataBaseHandler;
 import com.salik.todoapp.model.ToDo;
 
 import java.util.List;
@@ -18,8 +20,8 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
 
 
-    private final List<ToDo> todos;
-    private  final Context context;
+    private  List<ToDo> todos;
+    private  Context context;
     public ToDoAdapter(Context context,List<ToDo> todos) {
         this.todos = todos;
         this.context = context;
@@ -44,15 +46,40 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return todos.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView todoTitle;
         private CheckBox todoCompleted;
+        private Button deleteButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             todoTitle = itemView.findViewById(R.id.todo_title);
             todoCompleted = itemView.findViewById(R.id.todo_completed);
+            deleteButton = itemView.findViewById(R.id.delete_btn);
+            deleteButton.setOnClickListener(this);
+
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            switch (v.getId()){
+                case R.id.delete_btn:
+                    position = getAdapterPosition();
+                    ToDo todo = todos.get(position);
+                    deleteItem(todo.getId());
+                    break;
+            }
+        }
+
+        private void deleteItem(int id) {
+            DataBaseHandler db = new DataBaseHandler(context);
+            db.deleteToDo(id);
+            todos.remove(getAdapterPosition());
+            notifyItemRemoved(getAdapterPosition());
+        }
+
     }
+
 
 }

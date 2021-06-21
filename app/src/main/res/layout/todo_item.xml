@@ -3,6 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:padding="10dp"
+    android:gravity="center"
+
     android:layout_height="wrap_content">
 
     <TextView
@@ -20,4 +22,9 @@
         android:id="@+id/todo_completed"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:layout_width="30dp"
+        android:background="@android:drawable/ic_delete"
+        android:id="@+id/delete_btn"
+        android:layout_height="30dp"/>
 </LinearLayout>
