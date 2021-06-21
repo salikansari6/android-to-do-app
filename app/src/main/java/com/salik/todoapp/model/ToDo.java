@@ -1,5 +1,7 @@
 package com.salik.todoapp.model;
 
+import androidx.annotation.NonNull;
+
 public class ToDo {
     private int id;
     private String title;
@@ -36,5 +38,11 @@ public class ToDo {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "title: " + this.title;
     }
 }

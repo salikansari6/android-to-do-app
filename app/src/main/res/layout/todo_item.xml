@@ -9,11 +9,13 @@
         android:layout_width="wrap_content"
         android:text="@string/todo_title"
         android:textSize="24sp"
+        android:id="@+id/todo_title"
         android:layout_height="wrap_content"/>
 
     <CheckBox
         android:layout_width="wrap_content"
-
+        android:layout_marginLeft="100dp"
+        android:id="@+id/todo_completed"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

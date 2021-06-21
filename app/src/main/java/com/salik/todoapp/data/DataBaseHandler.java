@@ -76,14 +76,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public List<ToDo> getAllToDos(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Constants.TABLE_NAME,
-                new String[]{Constants.KEY_ID,Constants.KEY_TITLE,Constants.KEY_COMPLETED},Constants.KEY_ID+"=?",
+                new String[]{Constants.KEY_ID,Constants.KEY_TITLE,Constants.KEY_COMPLETED},null,
                 null,null,null,null);
         List<ToDo> toDoList = new ArrayList<>();
 
 
         if(cursor.moveToFirst()){
             do{
-                cursor.moveToNext();
                 ToDo toDo = new ToDo();
                 toDo.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.KEY_ID))));
                 toDo.setTitle(cursor.getString(cursor.getColumnIndex(Constants.KEY_TITLE)));
@@ -92,6 +91,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             }
             while(cursor.moveToNext());
         }
+        Log.d("TODOS",String.valueOf(toDoList.size()));
+
 
         return toDoList;
     }
