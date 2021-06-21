@@ -11,4 +11,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="hint_title">Enter To Do</string>
     <string name="save_button">SAVE</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="todo_title">To do title</string>
 </resources>

@@ -1,14 +1,18 @@
 package com.salik.todoapp;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.salik.todoapp.data.DataBaseHandler;
+import com.salik.todoapp.model.ToDo;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -45,11 +49,24 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.edit_todo,null);
         enterTodo = view.findViewById(R.id.enter_todo);
         saveButton = view.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveItem();
+            }
+        });
         alertDialogBuilder.setView(view);
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
 
+    }
+
+    private void saveItem() {
+        ToDo toDo = new ToDo();
+        toDo.setTitle(enterTodo.getText().toString());
+        DataBaseHandler db = new DataBaseHandler(this);
+        db.addToDo(toDo);
     }
 
     @Override
